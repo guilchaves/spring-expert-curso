@@ -1,5 +1,6 @@
 package br.com.guilchaves.dscatalog.services;
 
+import br.com.guilchaves.dscatalog.dto.CategoryDTO;
 import br.com.guilchaves.dscatalog.entities.Category;
 import br.com.guilchaves.dscatalog.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ public class CategoryService {
     private CategoryRepository repository;
 
     @Transactional(readOnly = true)
-    public List<Category> findAll(){
-        return repository.findAll();
+    public List<CategoryDTO> findAll() {
+        List<Category> list = repository.findAll();
+        return list.stream().map(CategoryDTO::new).toList();
     }
 }
