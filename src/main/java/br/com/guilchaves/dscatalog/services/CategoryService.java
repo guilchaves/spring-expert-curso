@@ -3,6 +3,7 @@ package br.com.guilchaves.dscatalog.services;
 import br.com.guilchaves.dscatalog.dto.CategoryDTO;
 import br.com.guilchaves.dscatalog.entities.Category;
 import br.com.guilchaves.dscatalog.repositories.CategoryRepository;
+import br.com.guilchaves.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +24,9 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public CategoryDTO findById(Long id){
-        Optional<Category> obj  = repository.findById(id);
-        Category category = obj.get();
+    public CategoryDTO findById(Long id) {
+        Category category = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
         return new CategoryDTO(category);
     }
 
