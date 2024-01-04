@@ -3,12 +3,13 @@ package br.com.guilchaves.dscatalog.controllers;
 import br.com.guilchaves.dscatalog.dto.CategoryDTO;
 import br.com.guilchaves.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -18,8 +19,8 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> findAll() {
-        List<CategoryDTO> list = service.findAll();
+    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
+        Page<CategoryDTO> list = service.findAll(pageable);
         return ResponseEntity.ok(list);
     }
 
