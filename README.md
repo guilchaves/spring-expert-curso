@@ -1,7 +1,6 @@
-# Curso Java Spring Expert
+# Sistema de Catálogo de Produtos DSCatalog
 
-Esse repositório contém o projeto desenvolvido durante
-o treinamento [Java Spring Expert](https://devsuperior.com.br/curso-java-spring-expert), da plataforma Dev Superior.</br>
+Esse repositório contém o projeto final desenvolvido durante o treinamento [Java Spring Expert](https://devsuperior.com.br/curso-java-spring-expert), da plataforma Dev Superior.</br>
 
 O projeto consiste em um sistema de catálogo de produtos, onde o objetivo do projeto é ensinar aos alunos como estruturar com projeto completo com camadas, boas práticas, validação, segurança, tratamento de exceções, consultas ao banco de dados, testes automatizados, dentre outros recursos.</br>
 
