@@ -3,6 +3,7 @@ package br.com.guilchaves.dscatalog.services;
 import br.com.guilchaves.dscatalog.dto.CategoryDTO;
 import br.com.guilchaves.dscatalog.entities.Category;
 import br.com.guilchaves.dscatalog.repositories.CategoryRepository;
+import br.com.guilchaves.dscatalog.services.exceptions.DatabaseException;
 import br.com.guilchaves.dscatalog.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,8 @@ public class CategoryService {
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Unable to delete resource with ID " + id +
+                    ". Database integrity violated");
         }
     }
 
