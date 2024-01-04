@@ -63,8 +63,8 @@ public class CategoryService {
         try {
             repository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException("Unable to delete resource with ID " + id +
-                    ". Database integrity violated");
+            throw new DatabaseException("Unable to delete resource with ID " + id
+                    + ". The resource is associated with other entities");
         }
     }
 
