@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 @DataJpaTest
 public class ProductRepositoryTests {
@@ -21,7 +22,7 @@ public class ProductRepositoryTests {
     private long countTotalProducts;
 
     @BeforeEach
-    void setUp() throws Exception{
+    void setUp() throws Exception {
         existingId = 1L;
         nonExistingId = 1000L;
         countTotalProducts = 25L;
@@ -35,16 +36,26 @@ public class ProductRepositoryTests {
     }
 
     @Test
-    public void saveShouldPersistWithAutoincrementWhenIdIsNull(){
-         Product product = Factory.createProduct();
-         product.setId(null);
+    public void saveShouldPersistWithAutoincrementWhenIdIsNull() {
+        Product product = Factory.createProduct();
+        product.setId(null);
 
-         product = repository.save(product);
+        product = repository.save(product);
 
-         Assertions.assertNotNull(product.getId());
-         Assertions.assertEquals(product.getId(), countTotalProducts + 1);
+        Assertions.assertNotNull(product.getId());
+        Assertions.assertEquals(product.getId(), countTotalProducts + 1);
     }
 
+    @Test
+    public void findByIdShouldReturnExistingOptionalProductWhenIdExists() {
+        Optional<Product> product = repository.findById(existingId);
+        Assertions.assertTrue(product.isPresent());
+    }
 
+    @Test
+    public void findByIdShouldReturnEmptyOptionalProductWhenIdDoesNotExists() {
+        Optional<Product> product = repository.findById(nonExistingId);
+        Assertions.assertTrue(product.isEmpty());
+    }
 
 }
