@@ -1,6 +1,7 @@
 package br.com.guilchaves.dscatalog.controllers.handlers;
 
 import br.com.guilchaves.dscatalog.dto.CustomError;
+import br.com.guilchaves.dscatalog.services.exceptions.DatabaseException;
 import br.com.guilchaves.dscatalog.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -19,4 +20,12 @@ public class CustomErrorHandler {
         CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<CustomError> database(DatabaseException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
 }
