@@ -1,7 +1,7 @@
 package br.com.guilchaves.dscatalog.repositories;
 
 import br.com.guilchaves.dscatalog.entities.Product;
-import br.com.guilchaves.dscatalog.tests.Factory;
+import br.com.guilchaves.dscatalog.utils.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

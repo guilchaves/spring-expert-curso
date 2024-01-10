@@ -1,4 +1,4 @@
-package br.com.guilchaves.dscatalog.tests;
+package br.com.guilchaves.dscatalog.utils;
 
 import br.com.guilchaves.dscatalog.dto.ProductDTO;
 import br.com.guilchaves.dscatalog.entities.Category;

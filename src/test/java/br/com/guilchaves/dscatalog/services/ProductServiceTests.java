@@ -7,7 +7,7 @@ import br.com.guilchaves.dscatalog.repositories.CategoryRepository;
 import br.com.guilchaves.dscatalog.repositories.ProductRepository;
 import br.com.guilchaves.dscatalog.services.exceptions.DatabaseException;
 import br.com.guilchaves.dscatalog.services.exceptions.ResourceNotFoundException;
-import br.com.guilchaves.dscatalog.tests.Factory;
+import br.com.guilchaves.dscatalog.utils.Factory;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

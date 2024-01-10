@@ -1,7 +1,8 @@
 package br.com.guilchaves.dscatalog.controllers;
 
 import br.com.guilchaves.dscatalog.dto.ProductDTO;
-import br.com.guilchaves.dscatalog.tests.Factory;
+import br.com.guilchaves.dscatalog.utils.Factory;
+import br.com.guilchaves.dscatalog.utils.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,11 +30,15 @@ public class ProductControllerIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private TokenUtil tokenUtil;
+
     private Long existingId;
     private Long nonExistingId;
     private Long countTotalProducts;
     private ProductDTO productDTO;
 
+    private String username, password, bearerToken;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -41,6 +46,9 @@ public class ProductControllerIntegrationTest {
         nonExistingId = 1000L;
         countTotalProducts = 25L;
         productDTO = Factory.createProductDTO();
+        username = "maria@gmail.com";
+        password = "123456";
+        bearerToken = tokenUtil.obtainAccessToken(mockMvc, username, password);
     }
 
     @Test
@@ -63,9 +71,10 @@ public class ProductControllerIntegrationTest {
 
 
         mockMvc.perform(put("/products/{id}", existingId)
-                .content(jsonBody)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                        .header("Authorization", "Bearer " + bearerToken)
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(existingId))
                 .andExpect(jsonPath("$.name").value(expectedName))
@@ -77,6 +86,7 @@ public class ProductControllerIntegrationTest {
         String jsonBody = objectMapper.writeValueAsString(productDTO);
 
         mockMvc.perform(put("/products/{id}", nonExistingId)
+                        .header("Authorization", "Bearer " + bearerToken)
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
