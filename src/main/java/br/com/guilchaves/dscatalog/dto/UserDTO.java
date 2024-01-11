@@ -1,6 +1,8 @@
 package br.com.guilchaves.dscatalog.dto;
 
 import br.com.guilchaves.dscatalog.entities.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,8 +14,10 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @NotBlank(message = "Must have a first name")
     private String firstName;
     private String lastName;
+    @Email(message = "Must be a valid email")
     private String email;
 
     Set<RoleDTO> roles = new HashSet<>();

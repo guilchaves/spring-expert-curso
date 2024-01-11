@@ -2,6 +2,7 @@ package br.com.guilchaves.dscatalog.dto;
 
 import br.com.guilchaves.dscatalog.entities.Category;
 import br.com.guilchaves.dscatalog.entities.Product;
+import jakarta.validation.constraints.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,10 +16,17 @@ public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    @Size(min = 3, max = 60, message = "Name must have beetween {min} and {max} characters long")
+    @NotBlank(message = "Name is required")
     private String name;
+    @Size(min = 10, message = "Description must be at least {min} characters")
+    @NotBlank(message = "Description is required")
     private String description;
+    @Positive(message = "Price must be a positive value")
+    @NotNull(message = "Price is required")
     private Double price;
     private String imgUrl;
+    @PastOrPresent(message = "Product date cannot be a future date")
     private Instant date;
 
     private List<CategoryDTO> categories = new ArrayList<>();
