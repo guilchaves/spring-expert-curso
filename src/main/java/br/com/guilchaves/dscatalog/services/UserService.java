@@ -3,6 +3,7 @@ package br.com.guilchaves.dscatalog.services;
 import br.com.guilchaves.dscatalog.dto.RoleDTO;
 import br.com.guilchaves.dscatalog.dto.UserDTO;
 import br.com.guilchaves.dscatalog.dto.UserInsertDTO;
+import br.com.guilchaves.dscatalog.dto.UserUpdateDTO;
 import br.com.guilchaves.dscatalog.entities.Role;
 import br.com.guilchaves.dscatalog.entities.User;
 import br.com.guilchaves.dscatalog.projections.UserDetailsProjection;
@@ -38,7 +39,6 @@ public class UserService implements UserDetailsService {
     private RoleRepository roleRepository;
 
 
-
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
         Page<User> list = repository.findAll(pageable);
@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
             User entity = repository.getReferenceById(id);
             copyDtoToEntity(dto, entity);

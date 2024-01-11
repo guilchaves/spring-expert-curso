@@ -2,6 +2,7 @@ package br.com.guilchaves.dscatalog.controllers;
 
 import br.com.guilchaves.dscatalog.dto.UserDTO;
 import br.com.guilchaves.dscatalog.dto.UserInsertDTO;
+import br.com.guilchaves.dscatalog.dto.UserUpdateDTO;
 import br.com.guilchaves.dscatalog.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,9 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO dto) {
-        dto = service.update(id, dto);
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
+        UserDTO newDto = service.update(id, dto);
+        return ResponseEntity.ok(newDto);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
