@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -30,9 +31,12 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        Page<Product> result = repository.findAll(pageable);
-        return result.map(ProductDTO::new);
+    public Page<ProductProjection> findAll(String name, String categoryId, Pageable pageable) {
+        List<Long> categoryIds = List.of();
+        if (!"0".equals(categoryId)){
+            categoryIds = Arrays.stream(categoryId.split(",")).map(Long::parseLong).toList();
+        }
+        return repository.searchProducts(categoryIds, name,  pageable);
     }
 
     @Transactional(readOnly = true)
@@ -88,13 +92,6 @@ public class ProductService {
             Category category = categoryRepository.getReferenceById(catDto.getId());
             entity.getCategories().add(category);
         }
-    }
-
-    //TODO
-    // remove this method made for testing
-    @Transactional(readOnly = true)
-    public Page<ProductProjection> testQuery(Pageable pageable){
-        return repository.searchProducts(Arrays.asList(), "", pageable);
     }
 
 }

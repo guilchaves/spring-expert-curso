@@ -4,6 +4,7 @@ import br.com.guilchaves.dscatalog.dto.ProductDTO;
 import br.com.guilchaves.dscatalog.projections.ProductProjection;
 import br.com.guilchaves.dscatalog.services.ProductService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +22,12 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    //TODO
-    // fix this method made only for testing
     @GetMapping
-    public ResponseEntity<Page<ProductProjection>> findAll(Pageable pageable) {
-        Page<ProductProjection> products = service.testQuery(pageable);
+    public ResponseEntity<Page<ProductProjection>> findAll(
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "categoryId", defaultValue = "0") String categoryId,
+            Pageable pageable) {
+        Page<ProductProjection> products = service.findAll(name, categoryId, pageable);
         return ResponseEntity.ok(products);
     }
 
