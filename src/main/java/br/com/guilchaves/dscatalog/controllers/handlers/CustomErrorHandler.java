@@ -3,6 +3,7 @@ package br.com.guilchaves.dscatalog.controllers.handlers;
 import br.com.guilchaves.dscatalog.dto.CustomError;
 import br.com.guilchaves.dscatalog.dto.ValidationError;
 import br.com.guilchaves.dscatalog.services.exceptions.DatabaseException;
+import br.com.guilchaves.dscatalog.services.exceptions.EmailException;
 import br.com.guilchaves.dscatalog.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,13 @@ public class CustomErrorHandler {
                 .forEach(fieldError ->
                         err.addErrros(fieldError.getField(), fieldError.getDefaultMessage()
                         ));
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<CustomError> email(EmailException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 
