@@ -1,6 +1,7 @@
 package br.com.guilchaves.dscatalog.controllers;
 
 import br.com.guilchaves.dscatalog.dto.ProductDTO;
+import br.com.guilchaves.dscatalog.projections.ProductProjection;
 import br.com.guilchaves.dscatalog.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,11 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    //TODO
+    // fix this method made only for testing
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
-        Page<ProductDTO> products = service.findAll(pageable);
+    public ResponseEntity<Page<ProductProjection>> findAll(Pageable pageable) {
+        Page<ProductProjection> products = service.testQuery(pageable);
         return ResponseEntity.ok(products);
     }
 
@@ -57,4 +60,6 @@ public class ProductController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

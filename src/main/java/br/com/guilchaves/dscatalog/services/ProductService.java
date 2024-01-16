@@ -4,6 +4,7 @@ import br.com.guilchaves.dscatalog.dto.CategoryDTO;
 import br.com.guilchaves.dscatalog.dto.ProductDTO;
 import br.com.guilchaves.dscatalog.entities.Category;
 import br.com.guilchaves.dscatalog.entities.Product;
+import br.com.guilchaves.dscatalog.projections.ProductProjection;
 import br.com.guilchaves.dscatalog.repositories.CategoryRepository;
 import br.com.guilchaves.dscatalog.repositories.ProductRepository;
 import br.com.guilchaves.dscatalog.services.exceptions.DatabaseException;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
 
 @Service
 public class ProductService {
@@ -86,4 +89,12 @@ public class ProductService {
             entity.getCategories().add(category);
         }
     }
+
+    //TODO
+    // remove this method made for testing
+    @Transactional(readOnly = true)
+    public Page<ProductProjection> testQuery(Pageable pageable){
+        return repository.searchProducts(Arrays.asList(), "", pageable);
+    }
+
 }
