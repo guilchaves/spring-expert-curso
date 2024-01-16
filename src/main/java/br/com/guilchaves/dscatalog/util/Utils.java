@@ -1,7 +1,6 @@
 package br.com.guilchaves.dscatalog.util;
 
-import br.com.guilchaves.dscatalog.entities.Product;
-import br.com.guilchaves.dscatalog.projections.ProductProjection;
+import br.com.guilchaves.dscatalog.projections.IdProjection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,11 +10,11 @@ import java.util.Map;
 public class Utils {
 
 
-    public static List<Product> replace(List<ProductProjection> ordered, List<Product> unordered) {
-        Map<Long, Product> map = new HashMap<>();
+    public static <ID> List<? extends IdProjection<ID>> replace(List<? extends IdProjection<ID>> ordered, List<? extends IdProjection<ID>> unordered) {
+        Map<ID, IdProjection<ID>> map = new HashMap<>();
         unordered.forEach(obj -> map.put(obj.getId(), obj));
 
-        List<Product> result = new ArrayList<>();
+        List<IdProjection<ID>> result = new ArrayList<>();
         ordered.forEach(obj -> result.add(map.get(obj.getId())));
 
         return result;

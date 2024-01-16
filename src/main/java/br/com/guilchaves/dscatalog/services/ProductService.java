@@ -4,12 +4,12 @@ import br.com.guilchaves.dscatalog.dto.CategoryDTO;
 import br.com.guilchaves.dscatalog.dto.ProductDTO;
 import br.com.guilchaves.dscatalog.entities.Category;
 import br.com.guilchaves.dscatalog.entities.Product;
-import br.com.guilchaves.dscatalog.util.Utils;
 import br.com.guilchaves.dscatalog.projections.ProductProjection;
 import br.com.guilchaves.dscatalog.repositories.CategoryRepository;
 import br.com.guilchaves.dscatalog.repositories.ProductRepository;
 import br.com.guilchaves.dscatalog.services.exceptions.DatabaseException;
 import br.com.guilchaves.dscatalog.services.exceptions.ResourceNotFoundException;
+import br.com.guilchaves.dscatalog.util.Utils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,6 +32,7 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAll(String name, String categoryId, Pageable pageable) {
         List<Long> categoryIds = List.of();
@@ -40,11 +41,11 @@ public class ProductService {
             categoryIds = Arrays.stream(categoryId.split(",")).map(Long::parseLong).toList();
         }
 
-        Page<ProductProjection> page = repository.searchProducts(categoryIds, name,  pageable);
+        Page<ProductProjection> page = repository.searchProducts(categoryIds, name, pageable);
         List<Long> productIds = page.map(ProductProjection::getId).toList();
 
         List<Product> entities = repository.searchProductsWithCategories(productIds);
-        entities = Utils.replace(page.getContent(), entities);
+        entities = (List<Product>) Utils.replace(page.getContent(), entities);
 
         List<ProductDTO> dtos = entities.stream().map(p -> new ProductDTO(p, p.getCategories())).toList();
 
