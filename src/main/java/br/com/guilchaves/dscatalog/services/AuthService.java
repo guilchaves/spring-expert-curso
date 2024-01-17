@@ -6,7 +6,6 @@ import br.com.guilchaves.dscatalog.entities.User;
 import br.com.guilchaves.dscatalog.repositories.PasswordRecoverRepository;
 import br.com.guilchaves.dscatalog.repositories.UserRepository;
 import br.com.guilchaves.dscatalog.services.exceptions.EmailException;
-import br.com.guilchaves.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
