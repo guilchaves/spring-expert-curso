@@ -5,6 +5,7 @@ import br.com.guilchaves.dscatalog.entities.PasswordRecover;
 import br.com.guilchaves.dscatalog.entities.User;
 import br.com.guilchaves.dscatalog.repositories.PasswordRecoverRepository;
 import br.com.guilchaves.dscatalog.repositories.UserRepository;
+import br.com.guilchaves.dscatalog.services.exceptions.EmailException;
 import br.com.guilchaves.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +37,7 @@ public class AuthService {
     public void createRecoverToken(EmailDTO body) {
         User user = userRepository.findByEmail(body.getEmail());
 
-        if (user == null) throw new ResourceNotFoundException("Email not found");
+        if (user == null) throw new EmailException("Email not found");
 
         String token = UUID.randomUUID().toString();
 
