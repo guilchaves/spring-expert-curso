@@ -1,6 +1,7 @@
 package br.com.guilchaves.dscatalog.controllers;
 
 import br.com.guilchaves.dscatalog.dto.EmailDTO;
+import br.com.guilchaves.dscatalog.dto.NewPasswordDTO;
 import br.com.guilchaves.dscatalog.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,14 @@ public class AuthController {
     private AuthService service;
 
     @PostMapping(value = "/recover-token")
-    public ResponseEntity<Void> createRecoverToken(@Valid @RequestBody EmailDTO body){
+    public ResponseEntity<Void> createRecoverToken(@Valid @RequestBody EmailDTO body) {
         service.createRecoverToken(body);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/new-password")
+    public ResponseEntity<Void> saveNewPassword(@Valid @RequestBody NewPasswordDTO dto) {
+        service.saveNewPassword(dto);
         return ResponseEntity.noContent().build();
     }
 }
