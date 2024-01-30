@@ -6,7 +6,7 @@
 ![JUnit](https://img.shields.io/badge/JUnit-%25A162.svg?style=for-the-badge&logo=junit5&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
 
-Esse repositório contém o projeto final desenvolvido durante o treinamento [Java Spring Expert](https://devsuperior.com.br/curso-java-spring-expert), da plataforma Dev Superior.</br>
+Esse repositório contém o projeto final desenvolvido para conclusão do treinamento [Java Spring Expert](https://devsuperior.com.br/curso-java-spring-expert), da plataforma Dev Superior.</br>
 
 Este projeto visa criar uma API RESTful de um sistema de catágolo de produtos usando tecnologias **Java, Spring Boot Framework, 
 Spring Security, Bean Validation, PostgresSQL como banco de dados, JWT para controle de autenticação, JUnit e Mockito para testes unitários e integrados, JaCoCo para cobertura de testes**. </br> 
