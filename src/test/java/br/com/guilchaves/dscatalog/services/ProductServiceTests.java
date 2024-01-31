@@ -3,6 +3,7 @@ package br.com.guilchaves.dscatalog.services;
 import br.com.guilchaves.dscatalog.dto.ProductDTO;
 import br.com.guilchaves.dscatalog.entities.Category;
 import br.com.guilchaves.dscatalog.entities.Product;
+import br.com.guilchaves.dscatalog.projections.ProductProjection;
 import br.com.guilchaves.dscatalog.repositories.CategoryRepository;
 import br.com.guilchaves.dscatalog.repositories.ProductRepository;
 import br.com.guilchaves.dscatalog.services.exceptions.DatabaseException;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -46,7 +48,9 @@ public class ProductServiceTests {
     private Category category;
     private Product product;
     private ProductDTO productDTO;
+    private ProductProjection productProjection;
     private PageImpl<Product> page;
+    private PageImpl<ProductProjection> productPage;
 
 
     @BeforeEach
@@ -57,9 +61,14 @@ public class ProductServiceTests {
         category = Factory.createCategory();
         product = Factory.createProduct();
         productDTO = Factory.createProductDTO();
+        productProjection = Factory.createProductProjection(1L, "Product");
         page = new PageImpl<>(List.of(product));
+        productPage = new PageImpl<>(List.of(productProjection, productProjection, productProjection));
 
-        when(repository.findAll((Pageable) ArgumentMatchers.any())).thenReturn(page);
+        when(repository.findAll((Pageable) any())).thenReturn(page);
+
+        when(repository.searchProducts(any(), any(), (Pageable) any())).thenReturn((PageImpl) productPage);
+        when(repository.searchProductsWithCategories(anyList())).thenReturn(List.of(product));
 
         when(repository.save(ArgumentMatchers.any())).thenReturn(product);
 
@@ -80,14 +89,17 @@ public class ProductServiceTests {
         when(repository.existsById(dependentId)).thenReturn(true);
     }
 
-//    @Test
-//    public void findAllShouldReturnPage() {
-//        Pageable pageable = PageRequest.of(0, 10);
-//        Page<ProductDTO> result = service.findAll(pageable);
-//
-//        Assertions.assertNotNull(result);
-//        verify(repository, times(1)).findAll(pageable);
-//    }
+    @Test
+    public void findAllShouldReturnPage() {
+        String productName = "";
+        String categoryId = "0";
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<ProductDTO> result = service.findAll(productName, categoryId, pageable);
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(0, result.getNumber());
+        Assertions.assertEquals(3, result.getSize());
+    }
 
     @Test
     public void findByIdShouldReturnProductDTOWhenIdExists() {
