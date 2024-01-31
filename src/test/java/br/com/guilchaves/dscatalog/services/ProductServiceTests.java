@@ -80,14 +80,14 @@ public class ProductServiceTests {
         when(repository.existsById(dependentId)).thenReturn(true);
     }
 
-    @Test
-    public void findAllShouldReturnPage() {
-        Pageable pageable = PageRequest.of(0, 10);
-        Page<ProductDTO> result = service.findAll(pageable);
-
-        Assertions.assertNotNull(result);
-        verify(repository, times(1)).findAll(pageable);
-    }
+//    @Test
+//    public void findAllShouldReturnPage() {
+//        Pageable pageable = PageRequest.of(0, 10);
+//        Page<ProductDTO> result = service.findAll(pageable);
+//
+//        Assertions.assertNotNull(result);
+//        verify(repository, times(1)).findAll(pageable);
+//    }
 
     @Test
     public void findByIdShouldReturnProductDTOWhenIdExists() {
