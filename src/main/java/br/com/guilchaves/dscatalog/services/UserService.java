@@ -41,7 +41,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private AuthService authService;
 
-
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
         Page<User> list = repository.findAll(pageable);

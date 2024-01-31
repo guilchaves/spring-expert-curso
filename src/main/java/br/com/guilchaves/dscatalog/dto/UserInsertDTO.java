@@ -1,5 +1,6 @@
 package br.com.guilchaves.dscatalog.dto;
 
+import br.com.guilchaves.dscatalog.entities.User;
 import br.com.guilchaves.dscatalog.services.validation.UserInsertValid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

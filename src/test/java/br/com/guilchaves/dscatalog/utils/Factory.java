@@ -30,16 +30,17 @@ public class Factory implements ProductProjection {
         return new ProductDTO(product, product.getCategories());
     }
 
-    public static Category createCategory(){
+    public static Category createCategory() {
         return new Category(1L, "Eletronics");
     }
 
-        public static ProductProjection createProductProjection(long l, String product) {
+    public static ProductProjection createProductProjection(long l, String product) {
         return new ProductProjection() {
             @Override
             public Long getId() {
                 return 1L;
             }
+
             @Override
             public String getName() {
                 return "Phone";
